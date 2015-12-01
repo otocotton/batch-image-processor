@@ -12,7 +12,7 @@ exe = Executable(script = "bossan.py",
                  base = base)
 
 setup(name = "Bossan",
-      version = "0.0.1",
+      version = "0.0.2",
       description = "batch-image-processor",
       executables = [exe],
       options = {"build_exe": {

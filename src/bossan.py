@@ -5,8 +5,6 @@ import os, sys
 from PySide import QtGui, QtCore
 from image_edit import ImageFactory
 
-# 850 * 300
-
 class DropArea(QtGui.QFrame):
     ''' ('v') drag and drop area '''
     def __init__(self):
@@ -15,9 +13,6 @@ class DropArea(QtGui.QFrame):
         self.setObjectName("DropArea")
         self.setAcceptDrops(True)
         self.setFixedSize(200, 280)
-        # self.setMinimumSize(200, 280)
-        # self.setMaximumSize(200, 280)
-        # self.setContentsMargins(-10, -10, -10, -10)
         # ('-') top section
         self.vb_top = QtGui.QVBoxLayout()
         self.vb_top.setAlignment(QtCore.Qt.AlignTop)
@@ -287,6 +282,7 @@ class AreaPngquant(DropArea):
         print("drop")
         file = [url.toLocalFile() for url in event.mimeData().urls()]
         ImageFactory(file).pngquant()
+        self.setStyleSheet("#AreaPngquant{background-color: #F2F2F2;}")
 
 
 class MainWidget(QtGui.QWidget):
@@ -296,8 +292,6 @@ class MainWidget(QtGui.QWidget):
         # ('-') essentials
         self.setObjectName("MainWidget")
         self.setWindowTitle("Bossan")
-        # self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
-        # self.resize(850, 300)
         self.setFixedSize(850, 300)
         self.setCSS()
         # ('-') yum yum
@@ -310,20 +304,22 @@ class MainWidget(QtGui.QWidget):
         self.setContentsMargins(-5, -11, -5, -11)
 
     def setCSS(self):
+        # ('o') set stylesheet from an external file
         with open("stylesheet.css","r") as style:
             self.setStyleSheet("".join(style.readlines()))
+
 
 def main():
     ''' ('v') main class, run the program '''
     QtCore.QTextCodec.setCodecForCStrings(QtCore.QTextCodec.codecForLocale())
-
+    # ('-') set icon
     app = QtGui.QApplication(sys.argv)
     app_icon = QtGui.QIcon(QtGui.QPixmap("resources/img/icon.png"))
     app.setWindowIcon(app_icon)
-
+    # ('-') show
     win = MainWidget()
     win.show()
-
+    # ('-') execute
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
